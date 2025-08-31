@@ -65,14 +65,14 @@ def findMostCommonExercise(data:csv)->dict:
 def extractTrainingdata(csv)->dict:
     daten = dict()
     if csv is not None:
-        # Temporäre Datei erzeugen
+
         with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp:
             shutil.copyfileobj(csv, tmp)
             tmp_path = tmp.name
 
     with open(tmp_path, "r", encoding="utf-8-sig") as f:
         lines = [line.strip() for line in f]
-        lines = [line.replace("\"", "") for line in lines if line != ""]  # strip entfernt \n am Ende
+        lines = [line.replace("\"", "") for line in lines if line != ""]  
 
     for index, line in enumerate(lines):
         exercise = ""
@@ -119,9 +119,10 @@ if st.session_state.training_data:
     st.table(statsDf)
     if st.button("show 1RM course"):
         oneRepMaxCourse = pd.DataFrame(generateOneRepMaxCourse(st.session_state.training_data[choice]))
-        oneRepMaxCourse["set_num"] = range(1, len(oneRepMaxCourse) + 1)  # numerische X-Achse
+        oneRepMaxCourse["set_num"] = range(1, len(oneRepMaxCourse) + 1)  
         df_course = oneRepMaxCourse.set_index("set_num")
         st.line_chart(oneRepMaxCourse["1RMs"])
+
 
 
 
